@@ -1,16 +1,21 @@
 const express = require('express')
-const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
-const userRoute = require('./routes/userRoute')
 
-dotenv.convig()
+const logger = require('./middleware/logger')
+const auth = require('./middleware/auth')
+const bookRoute = require('./routes/bookRoute')
+
 const app = express()
 
 app.use(bodyParser.json())
-app.use('/api/books',userRoute)
 
-const PORT = process.env.PORT
+// Middleware Logger (Global)
+app.use(logger)
 
-app.listen(PORT, ()=>{
-    console.log(`http://localhost:${PORT}/api/books`);
+// Middleware Auth hanya untuk route books
+app.use('/api/books', auth, bookRoute)
+
+const PORT = 3000
+app.listen(PORT, () => {
+    console.log(`Server berjalan di http://localhost:${PORT}`)
 })

@@ -6,4 +6,9 @@ const router = express.Router()
 router.get('/',userControl.getAllBooks)
 router.get('/:code',userControl.getBookByCode)
 
-module.exports = router
+router.post('/', userControl.addBook)
+router.delete('/:code', userControl.delBook)
+
+router.put('/:code', userControl.updateBook)
+
+module.exports = router
